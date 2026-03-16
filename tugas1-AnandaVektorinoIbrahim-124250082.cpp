@@ -269,7 +269,7 @@ void bubblesortasc(int n)
     }
 }
 
-// quick sort asc ygy
+// quick sort dsc ygy
 void quicksortdsc(int awal, int akhir)
 {
     int low = awal, high = akhir;
@@ -554,6 +554,119 @@ void carairoti()
     }
 }
 
+// bubble sort asc ygy
+void bubblesortascbeli(int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (roti[j].idroti > roti[j + 1].idroti)
+            {
+                swap(roti[j], roti[j + 1]);
+            }
+        }
+    }
+}
+
+// quick sort dsc ygy
+void quicksortdscbeli(int awal, int akhir)
+{
+    int low = awal, high = akhir;
+    int pivot = roti[(awal + akhir) / 2].idroti;
+
+    do
+    {
+        while (roti[low].idroti > pivot)
+            low++;
+        while (roti[high].idroti < pivot)
+            high--;
+        if (low <= high)
+        {
+            swap(roti[low], roti[high]);
+            low++;
+            high--;
+        }
+    } while (low <= high);
+    if (awal < high)
+        quicksortdscbeli(awal, high);
+    if (low < akhir)
+        quicksortdscbeli(low, akhir);
+}
+
+void lihatmenubeli()
+{
+    system("cls");
+    int metode;
+    bool found = false;
+    tunjuk = fopen("roti.txt", "r");
+    // error handling ygy
+    if (tunjuk == NULL)
+    {
+        cout << "Error Opening Data" << endl;
+        exit(1);
+    }
+    int i = 0;
+    while (fscanf(tunjuk, "%d %s %f %d", &roti[i].idroti, roti[i].namaroti, &roti[i].hargaroti, &roti[i].stokroti) == 4)
+    {
+        i++;
+        if (i >= 100)
+        {
+            break;
+        }
+    }
+    fclose(tunjuk);
+    // tampilan awal ygy
+    cout << "Jumlah data roti: " << i << endl;
+    cout << "Pilih metode lihat:" << endl;
+    cout << "1. Ascending" << endl;
+    cout << "2. Descending" << endl;
+    cout << "Masukkan metode: ";
+    // error handling ygy
+    while (!(cin >> metode))
+    {
+        cout << "Input harus angka! Masukkan metode kembali: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+    }
+    cout << endl;
+    // error handling ygy
+    while (found == false)
+    {
+        if (metode > 0 && metode < 3)
+        {
+            found = true;
+        }
+        else
+        {
+            system("cls");
+            cout << "Opsi tidak sesuai! Silahkan input kembali." << endl;
+            cout << "Jumlah data roti: " << i << endl;
+            cout << "Pilih metode lihat:" << endl;
+            cout << "1. Ascending" << endl;
+            cout << "2. Descending" << endl;
+            cout << "Masukkan metode: ";
+            while (!(cin >> metode))
+            {
+                cout << "Input harus angka! Masukkan metode kembali: ";
+                cin.clear();
+                cin.ignore(1000, '\n');
+            }
+            cout << endl;
+        }
+    }
+    switch (metode)
+    {
+    case 1:
+        bubblesortascbeli(i);
+        break;
+
+    case 2:
+        quicksortdscbeli(0, i - 1);
+        break;
+    }
+}
+
 // menu beli roti ygy
 void beliroti()
 {
@@ -564,7 +677,7 @@ void beliroti()
     int k = -1; // untuk index roti ygy
 
     system("cls");
-    lihatmenu();
+    lihatmenubeli();
     tunjuk = fopen("roti.txt", "r");
     // error handling ygy
     if (tunjuk == NULL)
