@@ -554,8 +554,8 @@ void carairoti()
     }
 }
 
-// bubble sort asc ygy
-void bubblesortascbeli(int n)
+// bubble sort asc by ID ygy
+void bubblesortascbyid(int n)
 {
     for (int i = 0; i < n - 1; i++)
     {
@@ -569,8 +569,8 @@ void bubblesortascbeli(int n)
     }
 }
 
-// quick sort dsc ygy
-void quicksortdscbeli(int awal, int akhir)
+// quick sort dsc by ID ygy
+void quicksortdscbyid(int awal, int akhir)
 {
     int low = awal, high = akhir;
     int pivot = roti[(awal + akhir) / 2].idroti;
@@ -589,9 +589,9 @@ void quicksortdscbeli(int awal, int akhir)
         }
     } while (low <= high);
     if (awal < high)
-        quicksortdscbeli(awal, high);
+        quicksortdscbyid(awal, high);
     if (low < akhir)
-        quicksortdscbeli(low, akhir);
+        quicksortdscbyid(low, akhir);
 }
 
 void lihatmenubeli()
@@ -658,13 +658,24 @@ void lihatmenubeli()
     switch (metode)
     {
     case 1:
-        bubblesortascbeli(i);
+        bubblesortascbyid(i);
         break;
 
     case 2:
-        quicksortdscbeli(0, i - 1);
+        quicksortdscbyid(0, i - 1);
         break;
     }
+
+    // menampilkan menu ygy
+    for (int j = 0; j < i; j++)
+    {
+        cout << "ID Roti    : " << roti[j].idroti << endl;
+        cout << "Nama Roti  : " << roti[j].namaroti << endl;
+        cout << "Harga Roti : " << roti[j].hargaroti << endl;
+        cout << "Stok Roti  : " << roti[j].stokroti << endl;
+        cout << endl;
+    }
+    system("pause");
 }
 
 // menu beli roti ygy
@@ -829,6 +840,26 @@ void invoice()
         cout << "Jumlah    : " << beliroticihuy[j].jumlahbeli << endl;
         cout << "Total     : Rp" << beliroticihuy[j].totalharga << endl;
         cout << "------------------------------" << endl;
+    }
+
+    string jawaban;
+    cout << "Apakah ingin reset data transaksi? (y/n)";
+    while (cin >> jawaban)
+    {
+        if (jawaban == "ya" || jawaban == "YA" || jawaban == "yA" || jawaban == "Ya" || jawaban == "y" || jawaban == "Y")
+        {
+            remove("transaksi.txt");
+            cout << "Data transaksi telah direset!" << endl;
+            break;
+        }
+        else if (jawaban == "no" || jawaban == "NO" || jawaban == "No" || jawaban == "nO" || jawaban == "n" || jawaban == "N")
+        {
+            break;
+        }
+        else
+        {
+            cout << "Jawaban tidak tersedia! Silahkan input kembali." << endl;
+        }
     }
     system("pause");
 }

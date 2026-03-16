@@ -1,2 +1,2 @@
-1 croissant 30000.00 50 
+1 croissant 30000.00 44 
 2 macaron 24000.00 10 
