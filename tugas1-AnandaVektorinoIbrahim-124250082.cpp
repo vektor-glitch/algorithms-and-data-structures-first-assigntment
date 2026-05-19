@@ -255,43 +255,43 @@ void editmenu()
 }
 
 // bubble sort asc ygy
-void bubblesortasc(int n)
+void bubblesortasc(menuroti *ptr, int n)
 {
     for (int i = 0; i < n - 1; i++)
     {
         for (int j = 0; j < n - i - 1; j++)
         {
-            if (roti[j].hargaroti > roti[j + 1].hargaroti)
+            if ((ptr + j)->hargaroti > (ptr + j + 1)->hargaroti)
             {
-                swap(roti[j], roti[j + 1]);
+                swap(*(ptr + j), *(ptr + j + 1));
             }
         }
     }
 }
 
 // quick sort dsc ygy
-void quicksortdsc(int awal, int akhir)
+void quicksortdsc(menuroti *ptr, int awal, int akhir)
 {
     int low = awal, high = akhir;
-    int pivot = roti[(awal + akhir) / 2].hargaroti;
+    float pivot = (ptr + (awal + akhir) / 2)->hargaroti;
 
     do
     {
-        while (roti[low].hargaroti > pivot)
+        while ((ptr + low)->hargaroti > pivot)
             low++;
-        while (roti[high].hargaroti < pivot)
+        while ((ptr + high)->hargaroti < pivot)
             high--;
         if (low <= high)
         {
-            swap(roti[low], roti[high]);
+            swap(*(ptr + low), *(ptr + high));
             low++;
             high--;
         }
     } while (low <= high);
     if (awal < high)
-        quicksortdsc(awal, high);
+        quicksortdsc(ptr, awal, high);
     if (low < akhir)
-        quicksortdsc(low, akhir);
+        quicksortdsc(ptr, low, akhir);
 }
 
 // buat lihat menu ygy
@@ -359,11 +359,11 @@ void lihatmenu()
     switch (metode)
     {
     case 1:
-        bubblesortasc(i);
+        bubblesortasc(roti, i);
         break;
 
     case 2:
-        quicksortdsc(0, i - 1);
+        quicksortdsc(roti, 0, i - 1);
         break;
     }
 
@@ -381,7 +381,7 @@ void lihatmenu()
 
 // function menu pelanggan ygy
 // squentilan search ygy
-void sequentialsearch(int i)
+void sequentialsearch(menuroti *ptr, int i)
 {
     char carinama[50];
     bool found = false;
@@ -394,21 +394,21 @@ void sequentialsearch(int i)
     {
         int k = 0;
 
-        while (roti[j].namaroti[k] == carinama[k] && roti[j].namaroti[k] != '\0')
+        while ((ptr + j)->namaroti[k] == carinama[k] && (ptr + j)->namaroti[k] != '\0')
         {
             k++;
         }
 
-        if (roti[j].namaroti[k] == '\0' && carinama[k] == '\0')
+        if ((ptr + j)->namaroti[k] == '\0' && carinama[k] == '\0')
         {
             found = true;
 
             cout << "Jumlah data roti: " << i << endl;
             cout << "Roti ditemukan!" << endl;
             cout << "=============================" << endl;
-            cout << "Nama Roti  : " << roti[j].namaroti << endl;
-            cout << "Harga Roti : " << roti[j].hargaroti << endl;
-            cout << "Stok Roti  : " << roti[j].stokroti << endl;
+            cout << "Nama Roti  : " << (ptr + j)->namaroti << endl;
+            cout << "Harga Roti : " << (ptr + j)->hargaroti << endl;
+            cout << "Stok Roti  : " << (ptr + j)->stokroti << endl;
             cout << endl;
             break;
         }
@@ -421,7 +421,7 @@ void sequentialsearch(int i)
 }
 
 // binary search ygy
-void binarysearch(int i)
+void binarysearch(menuroti *ptr, int i)
 {
     char carinama[50];
     cout << "Masukkan nama roti yang ingin dicari: ";
@@ -437,26 +437,26 @@ void binarysearch(int i)
         int tengah = (kiri + kanan) / 2;
 
         int k = 0;
-        while (roti[tengah].namaroti[k] == carinama[k] && roti[tengah].namaroti[k] != '\0')
+        while ((ptr + tengah)->namaroti[k] == carinama[k] && (ptr + tengah)->namaroti[k] != '\0')
         {
             k++;
         }
 
-        if (roti[tengah].namaroti[k] == carinama[k])
+        if ((ptr + tengah)->namaroti[k] == carinama[k])
         {
             found = true;
 
             cout << "Jumlah data roti: " << i << endl;
             cout << "Roti ditemukan!" << endl;
             cout << "=============================" << endl;
-            cout << "Nama Roti  : " << roti[tengah].namaroti << endl;
-            cout << "Harga Roti : " << roti[tengah].hargaroti << endl;
-            cout << "Stok Roti  : " << roti[tengah].stokroti << endl;
+            cout << "Nama Roti  : " << (ptr + tengah)->namaroti << endl;
+            cout << "Harga Roti : " << (ptr + tengah)->hargaroti << endl;
+            cout << "Stok Roti  : " << (ptr + tengah)->stokroti << endl;
             cout << endl;
 
             break;
         }
-        else if (roti[tengah].namaroti[k] < carinama[k])
+        else if ((ptr + tengah)->namaroti[k] < carinama[k])
         {
             kiri = tengah + 1;
         }
@@ -544,54 +544,54 @@ void carairoti()
     switch (metode)
     {
     case 1:
-        sequentialsearch(i);
+        sequentialsearch(roti, i); // rev
         break;
 
     case 2:
-        bubblesortasc(i);
-        binarysearch(i);
+        bubblesortasc(roti, i); // rev
+        binarysearch(roti, i);  // rev
         break;
     }
 }
 
 // bubble sort asc by ID ygy
-void bubblesortascbyid(int n)
+void bubblesortascbyid(menuroti *ptr, int n) // rev
 {
     for (int i = 0; i < n - 1; i++)
     {
         for (int j = 0; j < n - i - 1; j++)
         {
-            if (roti[j].idroti > roti[j + 1].idroti)
+            if ((ptr + j)->idroti > (ptr + j + 1)->idroti) // rev
             {
-                swap(roti[j], roti[j + 1]);
+                swap(*(ptr + j), *(ptr + j + 1)); // rev
             }
         }
     }
 }
 
 // quick sort dsc by ID ygy
-void quicksortdscbyid(int awal, int akhir)
+void quicksortdscbyid(menuroti *ptr, int awal, int akhir) // rev
 {
     int low = awal, high = akhir;
-    int pivot = roti[(awal + akhir) / 2].idroti;
+    int pivot = (ptr + (awal + akhir) / 2)->idroti; // rev
 
     do
     {
-        while (roti[low].idroti > pivot)
+        while ((ptr + low)->idroti > pivot) // rev
             low++;
-        while (roti[high].idroti < pivot)
+        while ((ptr + high)->idroti < pivot) // rev
             high--;
         if (low <= high)
         {
-            swap(roti[low], roti[high]);
+            swap(*(ptr + low), *(ptr + high)); // rev
             low++;
             high--;
         }
     } while (low <= high);
     if (awal < high)
-        quicksortdscbyid(awal, high);
+        quicksortdscbyid(ptr, awal, high); // rev
     if (low < akhir)
-        quicksortdscbyid(low, akhir);
+        quicksortdscbyid(ptr, low, akhir); // rev
 }
 
 void lihatmenubeli()
@@ -658,11 +658,11 @@ void lihatmenubeli()
     switch (metode)
     {
     case 1:
-        bubblesortascbyid(i);
+        bubblesortascbyid(roti, i); // rev
         break;
 
     case 2:
-        quicksortdscbyid(0, i - 1);
+        quicksortdscbyid(roti, 0, i - 1); // rev
         break;
     }
 
