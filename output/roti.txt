@@ -1,2 +1,4 @@
-1 croissant 30000.00 44 
+1 croissant 30000.00 42 
 2 macaron 24000.00 10 
+3 Bagel 12000.00 19 
+4 Pretzel 15000.00 15 
